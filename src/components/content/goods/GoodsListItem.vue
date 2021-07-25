@@ -25,14 +25,14 @@ export default {
 </script>
 <style scoped>
 .goods-list-item {
-  flex: 40%;
+  width: 150px;
 }
 .goods-list-item img {
   width: 100%;
 }
 .goods-list-item p {
-  /* white-space: nowrap;
+  white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis; */
+  text-overflow: ellipsis;
 }
 </style>

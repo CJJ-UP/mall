@@ -29,7 +29,8 @@ export default {
 <style scoped>
 .goods-list {
   display: flex;
+  align-items: center;
   flex-wrap: wrap;
-  /* justify-content: space-around; */
+  justify-content: space-around;
 }
 </style>
