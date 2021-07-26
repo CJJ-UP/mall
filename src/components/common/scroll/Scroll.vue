@@ -29,27 +29,42 @@ export default {
   mounted() {
     // this.$nextTick(function () {
     this.scroll = new BScroll(this.$refs.wrapper, {
-      probeType: this.probeType,
-      pullUpLoad: this.pullUpLoad,
       click: true,
       observeDOM: true,
+      probeType: this.probeType,
+      pullUpLoad: this.pullUpLoad,
+      // observeImage: true,
     });
     // });
-    if (this.probeType == 3) {
+    //监听滚动的距离
+    if (this.probeType === 2 || this.probeType === 3) {
       this.scroll.on("scroll", (position) => {
         this.$emit("scroll", position);
       });
     }
-    this.scroll.on("pullingUp", () => {
-      this.$emit("pullingUp");
-    });
+    //监听滚动到底部
+    if (this.pullUpLoad) {
+      this.scroll.on("pullingUp", () => {
+        this.$emit("pullingUp");
+      });
+    }
   },
   methods: {
+    //封装滚动到指定位置的方法
     scrollTo(x, y, time = 500) {
-      this.scroll.scrollTo(x, y, time);
+      this.scroll && this.scroll.scrollTo(x, y, time);
     },
+    //封装加载完成的方法
     finishPullUp() {
-      this.scroll.finishPullUp();
+      this.scroll && this.scroll.finishPullUp();
+    },
+    //封装重新计算滚动高度的方法
+    refresh() {
+      this.scroll && this.scroll.refresh();
+    },
+    //封装获取scroll的Y轴滚动距离的方法
+    getScrollY() {
+      return this.scroll ? this.scroll.y : 0;
     },
   },
 };

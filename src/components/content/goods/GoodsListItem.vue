@@ -1,12 +1,10 @@
 <!--  -->
 <template>
-  <div class="goods-list-item">
-    <a :href="goodsListItem.link">
-      <img :src="goodsListItem.show.img" alt="" />
-      <p>{{ goodsListItem.title }}</p>
-      <span>{{ goodsListItem.price }}</span>
-      <span>{{ goodsListItem.cfav }}</span>
-    </a>
+  <div class="goods-list-item" @click="itemClick">
+    <img :src="goodsListItem.show.img" alt="" @load="imageLoad" />
+    <p>{{ goodsListItem.title }}</p>
+    <span>{{ goodsListItem.price }}</span>
+    <span>{{ goodsListItem.cfav }}</span>
   </div>
 </template>
 
@@ -19,6 +17,16 @@ export default {
       default() {
         return null;
       },
+    },
+  },
+  methods: {
+    //发射到事件总线 让home组件监听
+    imageLoad() {
+      this.$bus.$emit("itemImageLoad");
+    },
+    //监听item的点击 跳转路由
+    itemClick() {
+      this.$router.push("/detail/" + this.goodsListItem.iid);
     },
   },
 };
