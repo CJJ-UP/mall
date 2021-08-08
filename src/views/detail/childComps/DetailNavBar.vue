@@ -1,6 +1,6 @@
 <!--  -->
 <template>
-  <div>
+  <div class="detail-nav-bar">
     <nav-bar>
       <div slot="left" @click="backClick">
         <img src="~assets/img/common/back.svg" alt="" />
@@ -38,6 +38,7 @@ export default {
     //监听详情导航栏文字点击
     titleClick(index) {
       this.select = index;
+      this.$emit("navClick", index);
     },
     //监听返回按钮点击 并返回上个页面
     backClick() {
@@ -51,6 +52,11 @@ export default {
 };
 </script>
 <style scoped>
+.detail-nav-bar {
+  position: relative;
+  z-index: 10;
+  background-color: #fff;
+}
 .title {
   display: flex;
   font-size: 14px;

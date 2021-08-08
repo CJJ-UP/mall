@@ -33,6 +33,7 @@ export default {
       observeDOM: true,
       probeType: this.probeType,
       pullUpLoad: this.pullUpLoad,
+      //图片加载自动调用refresh刷新
       // observeImage: true,
     });
     // });

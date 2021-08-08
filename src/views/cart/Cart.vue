@@ -1,21 +1,25 @@
 <!--  -->
 <template>
-  <div>
-    <h1>购物车</h1>
+  <div class="cart">
+    <cart-nav-bar></cart-nav-bar>
+    <cart-list />
+    <cart-bottom-bar />
   </div>
 </template>
 
 <script>
+import CartNavBar from "./childComps/CartNavBar";
+import CartList from "./childComps/CartList";
+import CartBottomBar from "./childComps/CartBottomBar";
+
 export default {
-  data() {
-    return {};
+  name: "Cart",
+  components: {
+    CartNavBar,
+    CartList,
+    CartBottomBar,
   },
-  //生命周期 - 创建完成（访问当前this实例）
-  created() {},
-  //生命周期 - 挂载完成（访问DOM元素）
-  mounted() {},
 };
 </script>
 <style scoped>
-/* @import url(); 引入css类 */
 </style>

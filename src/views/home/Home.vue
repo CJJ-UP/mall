@@ -15,8 +15,8 @@
       class="content"
       ref="scroll"
       :probe-type="3"
-      @scroll="contentScroll"
       :pull-up-load="true"
+      @scroll="contentScroll"
       @pullingUp="loadMore"
     >
       <home-swiper :banners="banners" @swiperImageLoad="swiperImageLoad" />
@@ -49,7 +49,7 @@ import FeatureView from "./childComps/FeatureView";
 
 import { getHomeMultidata, getHomeGoods } from "api/home";
 
-import { debounce } from "common/utils";
+import { itemListenerMixin } from "common/mixin";
 
 export default {
   name: "Home",
@@ -76,6 +76,7 @@ export default {
       scrollY: 0,
     };
   },
+  mixins: [itemListenerMixin],
   components: {
     NavBar,
     Scroll,
@@ -86,7 +87,6 @@ export default {
     RecommendView,
     FeatureView,
   },
-
   //生命周期函数
   created() {
     //请求首页轮播推荐多个数据
@@ -96,16 +96,18 @@ export default {
     this.getHomeGoods("new");
     this.getHomeGoods("sell");
   },
-  mounted() {
-    //对调用refresh方法进行防抖优化
-    const refresh = debounce(this.$refs.scroll.refresh, 50);
-    //接收事件总线的图片加载事件并监听
-    this.$bus.$on("itemImageLoad", () => {
-      refresh();
-      //每当图片加载就调用scroll里的refresh方法重新计算滚动高度
-      // this.$refs.scroll.refresh();
-    });
-  },
+  mounted() {},
+  //利用mixins对这段代码抽离封装 detail里图片加载刷新也会用到
+  // mounted() {
+  //   //对调用refresh方法进行防抖优化
+  //   const refresh = debounce(this.$refs.scroll.refresh, 50);
+  //   //接收事件总线的图片加载事件并监听
+  //   this.$bus.$on("itemImageLoad", () => {
+  //     refresh();
+  //     //每当图片加载就调用scroll里的refresh方法重新计算滚动高度
+  //     // this.$refs.scroll.refresh();
+  //   });
+  // },
   //使用keepAlive保持组件状态才能使用-回来时
   activated() {
     //先重新计算滚动距离 避免bug
@@ -117,6 +119,8 @@ export default {
   deactivated() {
     //记录离开时滚动Y轴距离
     this.scrollY = this.$refs.scroll.getScrollY();
+    //取消对图片加载的监听
+    this.$bus.$off("itemImageLoad", this.itemImgListener);
   },
   methods: {
     /**事件相关方法**/
@@ -215,7 +219,7 @@ export default {
 .content {
   /*计算可滚动范围
    margin-top: 44px;
-  height: calc(100% - 93px); 或*/
+  height: calc(100vh - 93px); 或*/
   position: absolute;
   top: 44px;
   bottom: 49px;

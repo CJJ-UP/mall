@@ -1,10 +1,10 @@
 <!--  -->
 <template>
   <div class="goods-list-item" @click="itemClick">
-    <img :src="goodsListItem.show.img" alt="" @load="imageLoad" />
+    <img v-lazy="showImage" alt="" @load="imageLoad" />
     <p>{{ goodsListItem.title }}</p>
-    <span>{{ goodsListItem.price }}</span>
-    <span>{{ goodsListItem.cfav }}</span>
+    <span class="price">{{ goodsListItem.price }}</span>
+    <span class="cfav"><i class="icon"></i>{{ goodsListItem.cfav }}</span>
   </div>
 </template>
 
@@ -29,11 +29,17 @@ export default {
       this.$router.push("/detail/" + this.goodsListItem.iid);
     },
   },
+  computed: {
+    showImage() {
+      return this.goodsListItem.image || this.goodsListItem.show.img;
+    },
+  },
 };
 </script>
 <style scoped>
 .goods-list-item {
   width: 150px;
+  text-align: center;
 }
 .goods-list-item img {
   width: 100%;
@@ -42,5 +48,20 @@ export default {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+.price {
+  font-size: 15px;
+  color: #ff5777;
+  margin-right: 8px;
+}
+
+.icon {
+  display: inline-block;
+  position: relative;
+  top: 1px;
+  width: 12px;
+  height: 12px;
+  background-image: url("~assets/img/common/collect.svg");
+  background-size: 100%;
 }
 </style>
