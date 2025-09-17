@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <keep-alive exclude="Detail">
-      <router-view></router-view>
+      <router-view>你是谁</router-view>
     </keep-alive>
     <main-tab-bar v-if="this.$route.path !== '/detail'" />
   </div>
