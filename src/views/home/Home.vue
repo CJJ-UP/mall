@@ -24,7 +24,7 @@
       <feature-view />
       <tab-control
         class="tab-control1"
-        :titles="['流行', '新款', '精选']"
+        :titles="['流行', '新款', '这里进行了修改']"
         @tabClick="tabClick"
         ref="tabControl1"
       />
